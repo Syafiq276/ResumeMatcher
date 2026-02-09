@@ -1,0 +1,10 @@
+pandas
+scikit-learn
+nltk
+langchain
+google-genai
+python-dotenv
+pdfplumber
+python-docx
+beautifulsoup4
+requests

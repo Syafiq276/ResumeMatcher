@@ -1,0 +1,12 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::post('/analyze', [UploadController::class, 'analyze'])->name('analyze');
+Route::get('/history', [UploadController::class, 'history'])->name('history');
+Route::get('/dashboard', [UploadController::class, 'index'])->name('dashboard');
