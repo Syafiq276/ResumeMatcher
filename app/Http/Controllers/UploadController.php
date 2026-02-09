@@ -19,16 +19,25 @@ class UploadController extends Controller
     public function analyze(Request $request)
     {
         $request->validate([
-            'resume' => 'required|mimes:pdf,docx|max:2048',
+            'resume' => 'nullable|required_without:resume_id|mimes:pdf,docx|max:2048',
+            'resume_id' => 'nullable|exists:resumes,id',
             'job_description' => 'required|string',
         ]);
 
-        // 1. Store the uploaded file
-        $filePath = $request->file('resume')->store('resumes'); // relative path
+        // 1. Get file path
+        if ($request->resume_id) {
+            $resume = \App\Models\Resume::where('id', $request->resume_id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
+            $filePath = $resume->file_path;
+        } else {
+            $filePath = $request->file('resume')->store('resumes');
+        }
+
         $absolutePath = Storage::path($filePath); // Get absolute path efficiently via driver
 
         if (!file_exists($absolutePath)) {
-            return back()->with('error', "File upload failed. Path not found: $absolutePath");
+            return back()->with('error', "File not found: $absolutePath");
         }
 
         // 2. Prepare Python command

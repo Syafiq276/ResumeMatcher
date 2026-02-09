@@ -14,6 +14,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/history', [UploadController::class, 'history'])->name('history');
     Route::get('/history/{result}', [UploadController::class, 'show'])->name('history.show');
 
+    Route::resource('resumes', \App\Http\Controllers\ResumeController::class)->only(['index', 'store', 'destroy']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

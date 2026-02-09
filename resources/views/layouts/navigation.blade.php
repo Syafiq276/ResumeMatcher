@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('history')" :active="request()->routeIs('history')">
                         {{ __('Scan History') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('resumes.index')" :active="request()->routeIs('resumes.*')">
+                        {{ __('My Resumes') }}
+                    </x-nav-link>
                 </div>
             </div>
 
